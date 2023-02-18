@@ -2,6 +2,9 @@ import time
 import serial
 from serial.tools import list_ports
 
+#Some of this is reused from
+#https://github.com/Gymnast544/DS-Input-Interface-Software
+
 ser = None
 def initSerial(comport):
     global ser

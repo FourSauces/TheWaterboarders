@@ -1,0 +1,1 @@
+{"account_address": "0x78c530bc76c23382b2743795fe5f1138d402f5bedec9fc910b5f7ec1e3714d6f", "private_key": "0xb9ad3248d41102ba5b4b6499f6babafedcddbcca85a5e71f83befa18ba099021"}
