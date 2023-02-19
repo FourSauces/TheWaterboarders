@@ -10,7 +10,7 @@ print(os.getcwd())
 
 x_c = 0 
 y_c = 0
-class WebcamRecorder:
+class WebcamRecorder:    
     def __init__(self, filename):
         self.filename = filename
         self.frame = None
@@ -32,16 +32,22 @@ class WebcamRecorder:
 
 
     def getCoords(self, frame):
-        rgb_frame = frame[:, :, ::-1]
-        face_locations = face_recognition.face_locations(rgb_frame)
-        if len(face_locations) == 0:
-            print("nofacedetected")
+        try:
+            print("getting coords")
+            rgb_frame = frame[:, :, ::-1]
+            face_locations = face_recognition.face_locations(rgb_frame)
+            if len(face_locations) == 0:
+                print("nofacedetected")
+                return (-1, -1)
+            middle_point = (frame.shape[1] // 2, frame.shape[0] // 2)
+            closest_face_location = min(face_locations, key=lambda loc: (loc[0]+loc[2] - middle_point[0])**2 + (loc[1]+loc[3] - middle_point[1])**2)
+            top, right, bottom, left = closest_face_location
+            the_center = ((left+right)//2, (top+bottom)//2)
+            print("center of face")##
+            return the_center
+        except:
+            print("error with getCoords")
             return (-1, -1)
-        middle_point = (frame.shape[1] // 2, frame.shape[0] // 2)
-        closest_face_location = min(face_locations, key=lambda loc: (loc[0]+loc[2] - middle_point[0])**2 + (loc[1]+loc[3] - middle_point[1])**2)
-        top, right, bottom, left = closest_face_location
-        the_center = ((left+right)//2, (top+bottom)//2)
-        return the_center
     
     def updateFrame(self):
         print("updating frame")
@@ -87,6 +93,10 @@ if __name__ == "__main__":
     recorder.isRecording = True
     time.sleep(5)
     print("about to save")
+    try:
+        os.remove(str(os.getcwd())+"/output.mp4")
+    except: 
+        print("file does not exist")
     recorder._save()
     print("saved")
 
