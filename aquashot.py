@@ -110,5 +110,6 @@ if __name__ == "__main__":
             print("video saved")
             ipfshash = uploadToIPFS("output.mp4")
             print(ipfshash)
+            depositingAddressObject = AccountAddress(bytes.fromhex(depAddress[2:]))
             sendNFT(aptosWallet, depAddress, "ipfs://"+ipfshash+".mp4")
         pass

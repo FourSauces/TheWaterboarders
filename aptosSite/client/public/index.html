@@ -39,5 +39,31 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <div style="width: 100%;">
+      <div style="width: 60%; height: 100px; float: left;"> 
+        <div id="twitch-embed"></div>
+
+        <!-- Load the Twitch embed JavaScript file -->
+        <script src="https://embed.twitch.tv/embed/v1.js"></script>
+    
+        <!-- Create a Twitch.Embed object that will render within the "twitch-embed" element -->
+        <script type="text/javascript">
+          new Twitch.Embed("twitch-embed", {
+            width: 854,
+            height: 480,
+            channel: "aqua_shot_wb",
+            muted: true,
+            layout: "video",
+            // Only needed if this page is going to be embedded on other websites
+            parent: ["embed.example.com", "othersite.example.com"]
+          });
+        </script>
+      </div>
+      <div style="margin-left: 60%; height: 100px;"> 
+        <img src="logoo.png" alt="banger logo">
+      </div>
+  </div>
+    
   </body>
 </html>

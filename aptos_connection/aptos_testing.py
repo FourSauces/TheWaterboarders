@@ -1,4 +1,5 @@
 from aptos_sdk.account import Account
+from aptos_sdk.account_address import AccountAddress
 from aptos_sdk.client import FaucetClient, RestClient
 import requests
 import json
@@ -145,7 +146,10 @@ if __name__ == "__main__":
         bob, "AquaShot NFT Moments", "Moments created using AquaShot", "https://aquashot.tech/"
     )  # <:!:section_4
     rest_client.wait_for_transaction(txn_hash)"""
-    sendNFT(bob, alice.address(), "https://aptos.dev/img/nyan.jpeg")
+    print(len(str(alice.address())))
+    print(str(alice.address()))
+    aliceaddy = AccountAddress(bytes.fromhex(str(alice.address())[2:]))
+    sendNFT(bob, aliceaddy, "https://aptos.dev/img/nyan.jpeg")
     
     """
     tokenname = "token7"

@@ -71,29 +71,36 @@ function App() {
   useEffect(() => {
     fetchList();
   }, [account?.address]);
+
+
+
+
   return (
     <>
-      <Layout style={{ backgroundImage: `url(${aquaShotImage})`, backgroundSize: "cover", backgroundRepeat: "no-repeat" }}>
-      <Row align="middle" style={{ backgroundColor: "#ffffff" }}>
-          <Col span={40} offset={6}>
-          <h1 style={{ fontFamily: "Arial, sans-serif", fontSize: "80px", fontWeight: "bold", color: "#0FAC86" }}>Aqua Shot</h1>
+      <Layout >
+        <Row align="middle" style={{ backgroundColor: "#ffffff" }}>
+          <Col span={10} offset={3}>
+          <h1 style={{ fontFamily: "Arial, sans-serif", fontSize: "60px", fontWeight: "bold", color: "#38A6DB" }}>Aqua Shot</h1>
           </Col>
-          <Col span={40} style={{ textAlign: "right", paddingRight: "300px", backgroundColor: "#f0f0f0" }}>
-            <Col span={40} style={{ textAlign: "right", paddingRight: "200px" }}>
+          <Col span={20} style={{ textAlign: "right", backgroundColor: "#ffffff" }}>
             <WalletSelector />
           </Col>
-          </Col>
         </Row>
-        <Row align="middle" style={{ backgroundColor: "#AF9AF1" }}>
-        <Button onClick={donateFund} block type="primary" style={{ height: "80px", backgroundColor: "#000080", color: "#ffffff", fontSize: "50px" } }>
-          Purchase a shot
+        <Row align="middle" style={{ backgroundColor: "#38A6DB" }}>
+        <Button onClick={donateFund} block type="primary" style={{ height: "80px", backgroundColor: "#38A6DB", color: "#ffffff", fontSize: "50px" } }>
+          Click here to purchase a shot
         </Button>
         </Row>
-        <Row align="middle">
+        <Row align="middle" style={{ backgroundColor: "#ffffff" }}>
           <h1 id="message">
             Connect your wallet please
           </h1>
         </Row>
+        <Row align="middle">
+          
+        </Row>
+        
+
       </Layout>
     </>
   );
