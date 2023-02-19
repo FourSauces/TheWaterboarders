@@ -12,7 +12,13 @@ pinningobj = pinning.Pinning(apikey, apisecret, jwt)
 
 def uploadToIPFS(filepath):
     global pinningobj
-    return pinningobj.pin_file_to_ipfs(filepath)
+    try:
+        output = pinningobj.pin_file_to_ipfs(filepath)['IpfsHash']
+        print("Successfully uploaded to IPFS with hash "+output)
+        return output
+    except:
+        print("Failure to upload for some reason")
+        return ""
 
 
 
