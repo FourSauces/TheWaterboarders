@@ -61,6 +61,8 @@ class WebcamRecorder:
             self.frame = frame
             if self.isRecording:
                 self.frames.append(frame)
+            #cv2.imshow("str", frame)
+            #cv2.waitKey(0)
             
 
     def updateFrameLoop(self):
@@ -73,7 +75,7 @@ class WebcamRecorder:
             print("Center of face", self.centerFace)
             #diy fifo queue
             self.prevFaces.append(self.centerFace)
-            if len(self.prevFaces)>5:
+            if len(self.prevFaces)>2:
                 self.prevFaces.pop(0)
     
     def _save(self):

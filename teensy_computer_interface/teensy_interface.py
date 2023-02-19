@@ -73,10 +73,10 @@ def ledBlueOff():
 
 xServoPos = 90
 def setXServo(position):
-    if position>180:
-        position = 180
-    elif position<0:
-        position = 0
+    if position>97:
+        position = 97
+    elif position<86:
+        position = 86
     global xServoPos
     xServoPos = position
     sendByte(73)
@@ -85,10 +85,10 @@ def setXServo(position):
 
 yServoPos = 90
 def setYServo(position):
-    if position>180:
-        position = 180
-    elif position<0:
-        position = 0
+    if position>120:
+        position = 120
+    elif position<60:
+        position = 60
     global yServoPos
     yServoPos = position
     sendByte(74)
@@ -108,11 +108,11 @@ if(__name__ == "__main__"):
     ledRedOff()
     ledGreenOn()
     setXServo(90)
-    setYServo(128)
+    setYServo(90)
     time.sleep(2)
     ledGreenOff()
-    setXServo(86)
-    setYServo(1)
+    setXServo(97)
+    setYServo(110)
     time.sleep(.5)
     ledBlueOn()
     time.sleep(.5)
