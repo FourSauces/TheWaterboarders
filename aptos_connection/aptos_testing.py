@@ -60,6 +60,8 @@ def getNextDepositorAddress(receivingAddress):
     else:
         return ""
 
+
+
 if __name__ == "__main__":
     # :!:>section_1
     rest_client = RestClient(NODE_URL)
