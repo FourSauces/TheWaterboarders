@@ -71,12 +71,26 @@ def ledBlueOff():
     sendByte(72)
     print("Blue LEDs turned off")
 
+xServoPos = None
 def setXServo(position):
+    if position>180:
+        position = 180
+    elif position<0:
+        position = 0
+    global xServoPos
+    xServoPos = position
     sendByte(73)
     sendByte(position)
     print("X Servo set to position:", position)
 
+yServoPos = None
 def setYServo(position):
+    if position>180:
+        position = 180
+    elif position<0:
+        position = 0
+    global yServoPos
+    yServoPos = position
     sendByte(74)
     sendByte(position)
     print("Y Servo set to position:", position)
@@ -93,13 +107,14 @@ if(__name__ == "__main__"):
     stopPump()
     ledRedOff()
     ledGreenOn()
-    setXServo(128)
+    setXServo(90)
     setYServo(128)
-    time.sleep(.5)
+    time.sleep(2)
     ledGreenOff()
-    setXServo(0)
-    setYServo(0)
+    setXServo(86)
+    setYServo(1)
     time.sleep(.5)
     ledBlueOn()
     time.sleep(.5)
     ledBlueOff()
+    setXServo(90)
