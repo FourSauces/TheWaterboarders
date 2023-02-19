@@ -149,7 +149,7 @@ if __name__ == "__main__":
     print(len(str(alice.address())))
     print(str(alice.address()))
     aliceaddy = AccountAddress(bytes.fromhex(str(alice.address())[2:]))
-    sendNFT(bob, aliceaddy, "https://aptos.dev/img/nyan.jpeg")
+    sendNFT(bob, aliceaddy, "https://gateway.pinata.cloud/ipfs/QmaDL4hJW4vAg9xZoQcdePZYJqDn5ffQKv1w4W2n4aUQZh")
     
     """
     tokenname = "token7"

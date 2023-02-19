@@ -14,8 +14,9 @@ print("successfully imported CV")
 def maintainServoTracking():
     print("Servo tracking started")
     faces = []
+    yPos = 90
     while True:
-        time.sleep(1)
+        time.sleep(.35)
         faces = recorder.prevFaces
         xSum = 0
         ySum = 0
@@ -27,29 +28,57 @@ def maintainServoTracking():
                 numEntries+=1
         if numEntries==0:
             numEntries=1
+            continue
         xAvg = xSum/numEntries
         yAvg = ySum/numEntries
         height, width, channels = [1080,1920,3]
 
-        print("height", height, "width", width, "xavg", xAvg, "yavg", yAvg)
-        xmargin = .1
-        ymargin = .1
+        #print("height", height, "width", width, "xavg", xAvg, "yavg", yAvg)
+        xmargin = 100
+        ymargin = 100
+        ycenter = 600
+        if yAvg>ycenter+ymargin:
+            #move down - decrement servo position
+            yPos = yPos-1
+            setYServo(yPos)
+            if yPos<60:
+                yPos = 60
+        elif yAvg<ycenter-ymargin:
+            yPos = yPos + 1
+            setYServo(yPos+3)
+            if yPos>120:
+                yPos = 120
+        if xAvg>960:
+            setXServo(86)
+            if xAvg>1440:
+                time.sleep(.05)
+            time.sleep(.02)
+            setXServo(90)
+        else:
+            setXServo(97)
+            if xAvg<480:
+                time.sleep(.05)
+            time.sleep(.02)
+            setXServo(90)
+        #print("y servo pos", yPos)
+        
+        """
         if xAvg < (width/2+width*(xmargin/2)) and xAvg>(width/2-width*(xmargin/2)):
             #x doesn't need moving
             pass
         elif xAvg-(width/2)>0:
-            #move left
+            #move in one direction
             setXServo(86)
             time.sleep(.1)
             setXServo(90)
             pass
         else:
-            #move right
-            setXServo(94)
+            #move in the other direction
+            setXServo(97)
             time.sleep(.1)
             setXServo(90)
-            pass
-
+            pass"""
+        """
         if yAvg < (height/2+height*(ymargin/2)) and yAvg>(height/2-height*(ymargin/2)):
             #y doesn't need moving
             pass
@@ -60,7 +89,7 @@ def maintainServoTracking():
         else:
             #move down
             setYServo(yServoPos-2)
-            pass
+            pass"""
         
 
 
@@ -77,6 +106,8 @@ if __name__ == "__main__":
     ledRedOff()
     ledGreenOff()
     ledBlueOff()
+    setXServo(90)
+    setYServo(90)
     print("Teensy successfully initialized")
 
     #initialize CV and tracking threads
@@ -85,8 +116,9 @@ if __name__ == "__main__":
     print("recorder created")
     recorder.start()
     print("recorder started")
-    #j = threading.Thread(target=maintainServoTracking)
-    #j.start()
+    j = threading.Thread(target=maintainServoTracking)
+    j.start()
+
     while True:
         #check if there is a donation
         depAddress = getNextDepositorAddress(aptosWallet.address())
@@ -110,6 +142,15 @@ if __name__ == "__main__":
             print("video saved")
             ipfshash = uploadToIPFS("output.mp4")
             print(ipfshash)
-            depositingAddressObject = AccountAddress(bytes.fromhex(depAddress[2:]))
-            sendNFT(aptosWallet, depAddress, "ipfs://"+ipfshash+".mp4")
+            depositingAddressObject = AccountAddress(bytes.fromhex(str(depAddress).strip()[2:]))
+            print(depAddress)
+            print(depositingAddressObject)
+            try:
+                sendNFT(aptosWallet, depositingAddressObject, "https://gateway.pinata.cloud/ipfs/"+ipfshash)
+            except:
+                try:
+                    sendNFT(aptosWallet, depositingAddressObject, "https://gateway.pinata.cloud/ipfs/"+ipfshash)
+                except:
+                    pass
+
         pass
