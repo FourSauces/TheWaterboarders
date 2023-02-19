@@ -116,7 +116,7 @@ if __name__ == "__main__":
     
     
     txn_hash = rest_client.create_collection(
-        bob, "waterboardersss", "Bob's simple collection", "https://aptos.dev"
+        bob, "AquaShot NFT Moments", "Moments created using AquaShot", "https://aquashot.tech/"
     )  # <:!:section_4
     rest_client.wait_for_transaction(txn_hash)
     

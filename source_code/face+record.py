@@ -27,6 +27,8 @@ class WebcamRecorder:
         self.cap.set(cv2.CAP_PROP_FPS, self.fps)  # Set to 30 frames per second
         t = threading.Thread(target=self.updateFrameLoop, args=())
         t.start()
+        g = threading.Thread(target=self.updatePositionsLoop, args=())
+        g.start()
 
 
     def getCoords(self, frame):
@@ -49,18 +51,23 @@ class WebcamRecorder:
             self.frame = frame
             if self.isRecording:
                 self.frames.append(frame)
-            self.centerFace = self.getCoords(frame)
-            print("Center of face", self.centerFace)
-            #diy fifo queue
-            self.prevFaces.append(self.centerFace)
-            if len(self.prevFaces)>30:
-                self.prevFaces.pop(0)
+            
 
     def updateFrameLoop(self):
         while True:
             self.updateFrame()
     
+    def updatePositionsLoop(self):
+        while True:
+            self.centerFace = self.getCoords(self.frame)
+            print("Center of face", self.centerFace)
+            #diy fifo queue
+            self.prevFaces.append(self.centerFace)
+            if len(self.prevFaces)>30:
+                self.prevFaces.pop(0)
+    
     def _save(self):
+        self.isRecording = False
         if len(self.frames) == 0:
             return
         height, width, channels = self.frames[0].shape
@@ -79,7 +86,6 @@ if __name__ == "__main__":
     print("recording started")
     recorder.isRecording = True
     time.sleep(5)
-    recorder.isRecording = False
     print("about to save")
     recorder._save()
     print("saved")
