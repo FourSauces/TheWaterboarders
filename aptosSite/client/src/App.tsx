@@ -75,17 +75,17 @@ function App() {
     <>
       <Layout>
         <Row align="middle">
-          <Col span={10} offset={2}>
+          <Col span={10} offset={3}>
             <h1>Aqua Shot</h1>
           </Col>
-          <Col span={12} style={{ textAlign: "right", paddingRight: "200px" }}>
-            <Col span={12} style={{ textAlign: "right", paddingRight: "200px" }}>
+          <Col span={40} style={{ textAlign: "right", paddingRight: "300px" }}>
+            <Col span={40} style={{ textAlign: "right", paddingRight: "200px" }}>
             <WalletSelector />
           </Col>
           </Col>
         </Row>
         <Row align="middle">
-        <Button onClick={donateFund} block type="primary" style={{ height: "40px", backgroundColor: "#3f67ff" }}>
+        <Button onClick={donateFund} block type="primary" style={{ height: "80px", backgroundColor: "#3f67ff" }}>
           Purchase a shot
         </Button>
         </Row>

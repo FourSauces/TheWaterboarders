@@ -4,7 +4,10 @@ import face_recognition
 import threading
 import time
 
-os.chdir("source_code")
+
+print(os.getcwd())
+
+
 x_c = 0 
 y_c = 0
 class WebcamRecorder:
@@ -22,7 +25,7 @@ class WebcamRecorder:
     def start(self):
         self.cap = cv2.VideoCapture(0)
         self.cap.set(cv2.CAP_PROP_FPS, self.fps)  # Set to 30 frames per second
-        t = threading.Thread(target=self.updateFrameLoop, args=(self))
+        t = threading.Thread(target=self.updateFrameLoop, args=())
         t.start()
 
 
@@ -39,16 +42,18 @@ class WebcamRecorder:
         return the_center
     
     def updateFrame(self):
+        print("updating frame")
         ret, frame = self.cap.read()
-        if not ret:
+        if ret:
+            print("valid frame")
             self.frame = frame
-            if self.isRecording():
+            if self.isRecording:
                 self.frames.append(frame)
             self.centerFace = self.getCoords(frame)
             print("Center of face", self.centerFace)
             #diy fifo queue
             self.prevFaces.append(self.centerFace)
-            if len(self.prevFaces>30):
+            if len(self.prevFaces)>30:
                 self.prevFaces.pop(0)
 
     def updateFrameLoop(self):
@@ -69,9 +74,13 @@ class WebcamRecorder:
 
 if __name__ == "__main__":
     recorder = WebcamRecorder("output.mp4")
+    print("recorder inited")
     recorder.start()
+    print("recording started")
     recorder.isRecording = True
     time.sleep(5)
     recorder.isRecording = False
-    recorder.save()
+    print("about to save")
+    recorder._save()
+    print("saved")
 
