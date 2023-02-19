@@ -80,9 +80,9 @@ function App() {
       <Layout>
       <Row align="middle" style={{ backgroundColor: "#ffffff" }}>
           <Col span={40} offset={6}>
-          <h1 style={{ fontFamily: "Arial, sans-serif", fontSize: "80px", fontWeight: "bold", color: "#38A6DB" }}>Aqua Shot</h1>
+          <h1 style={{ fontFamily: "Arial, sans-serif", fontSize: "60px", fontWeight: "bold", color: "#38A6DB" }}>Aqua Shot</h1>
           </Col>
-          <Col span={10} style={{ textAlign: "left", paddingRight: "100px" }}>
+          <Col span={10} style={{ textAlign: "left", paddingLeft: "310px" }}>
             <WalletSelector />
           </Col>
         </Row>
