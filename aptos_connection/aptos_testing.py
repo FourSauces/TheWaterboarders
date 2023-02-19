@@ -9,8 +9,8 @@ now = datetime.now()
 
 NODE_URL = "https://fullnode.testnet.aptoslabs.com/v1"
 FAUCET_URL = "https://faucet.testnet.aptoslabs.com"
-
-
+rest_client = RestClient(NODE_URL)
+faucet_client = FaucetClient(FAUCET_URL, rest_client)  # <:!:section_1
 """
 priv key 0x3e029bf76b8c2d9c15f89d81d78fa0abf8e1769c8c58ce611cdda798fc4f93a2
 pub key 0x880849c2e185240235e261ca3988ec41b9fb132bd7b82677ff7574263e2a7921
@@ -64,6 +64,7 @@ def getNextDepositorAddress(receivingAddress):
         return ""
 
 def sendNFT(sender, targetAddress, metalocation):
+    global rest_client
     print("Sending NFT from "+str(sender.address())+" to "+str(targetAddress))
     current_time = now.strftime("%H:%M:%S")
     txn_hash = rest_client.create_token(
@@ -90,8 +91,7 @@ def sendNFT(sender, targetAddress, metalocation):
 
 if __name__ == "__main__":
     # :!:>section_1
-    rest_client = RestClient(NODE_URL)
-    faucet_client = FaucetClient(FAUCET_URL, rest_client)  # <:!:section_1
+    
 
     # :!:>section_2
     alice = Account.load("aliceee.txt")

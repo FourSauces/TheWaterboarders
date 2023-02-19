@@ -4,7 +4,7 @@ import "@aptos-labs/wallet-adapter-ant-design/dist/index.css";
 import { AptosClient } from "aptos";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import React, { useState, useEffect } from 'react';
-
+import aquaShotImage from './Aqua Shot_centered.png'; // import the image
 
 const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
 const client = new AptosClient(NODE_URL);
@@ -73,19 +73,19 @@ function App() {
   }, [account?.address]);
   return (
     <>
-      <Layout>
-        <Row align="middle">
-          <Col span={10} offset={3}>
-            <h1>Aqua Shot</h1>
+      <Layout style={{ backgroundImage: `url(${aquaShotImage})`, backgroundSize: "cover", backgroundRepeat: "no-repeat" }}>
+      <Row align="middle" style={{ backgroundColor: "#ffffff" }}>
+          <Col span={40} offset={6}>
+          <h1 style={{ fontFamily: "Arial, sans-serif", fontSize: "80px", fontWeight: "bold", color: "#0FAC86" }}>Aqua Shot</h1>
           </Col>
-          <Col span={40} style={{ textAlign: "right", paddingRight: "300px" }}>
+          <Col span={40} style={{ textAlign: "right", paddingRight: "300px", backgroundColor: "#f0f0f0" }}>
             <Col span={40} style={{ textAlign: "right", paddingRight: "200px" }}>
             <WalletSelector />
           </Col>
           </Col>
         </Row>
-        <Row align="middle">
-        <Button onClick={donateFund} block type="primary" style={{ height: "80px", backgroundColor: "#3f67ff" }}>
+        <Row align="middle" style={{ backgroundColor: "#AF9AF1" }}>
+        <Button onClick={donateFund} block type="primary" style={{ height: "80px", backgroundColor: "#000080", color: "#ffffff", fontSize: "50px" } }>
           Purchase a shot
         </Button>
         </Row>

@@ -71,7 +71,7 @@ def ledBlueOff():
     sendByte(72)
     print("Blue LEDs turned off")
 
-xServoPos = None
+xServoPos = 90
 def setXServo(position):
     if position>180:
         position = 180
@@ -83,7 +83,7 @@ def setXServo(position):
     sendByte(position)
     print("X Servo set to position:", position)
 
-yServoPos = None
+yServoPos = 90
 def setYServo(position):
     if position>180:
         position = 180

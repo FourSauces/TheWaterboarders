@@ -10,6 +10,7 @@ print(os.getcwd())
 
 x_c = 0 
 y_c = 0
+f = None
 class WebcamRecorder:    
     def __init__(self, filename):
         self.filename = filename
@@ -33,7 +34,7 @@ class WebcamRecorder:
 
     def getCoords(self, frame):
         try:
-            print("getting coords")
+            # print("getting coords")
             rgb_frame = frame[:, :, ::-1]
             face_locations = face_recognition.face_locations(rgb_frame)
             if len(face_locations) == 0:
@@ -43,17 +44,20 @@ class WebcamRecorder:
             closest_face_location = min(face_locations, key=lambda loc: (loc[0]+loc[2] - middle_point[0])**2 + (loc[1]+loc[3] - middle_point[1])**2)
             top, right, bottom, left = closest_face_location
             the_center = ((left+right)//2, (top+bottom)//2)
-            print("center of face")##
+            # print("center of face")##
             return the_center
         except:
-            print("error with getCoords")
+            # print("error with getCoords")
             return (-1, -1)
     
     def updateFrame(self):
-        print("updating frame")
+        # print("updating frame")
         ret, frame = self.cap.read()
+        global f
+        f = frame.shape
+        
         if ret:
-            print("valid frame")
+            # print("valid frame")
             self.frame = frame
             if self.isRecording:
                 self.frames.append(frame)
@@ -69,7 +73,7 @@ class WebcamRecorder:
             print("Center of face", self.centerFace)
             #diy fifo queue
             self.prevFaces.append(self.centerFace)
-            if len(self.prevFaces)>30:
+            if len(self.prevFaces)>5:
                 self.prevFaces.pop(0)
     
     def _save(self):
@@ -98,5 +102,6 @@ if __name__ == "__main__":
     except: 
         print("file does not exist")
     recorder._save()
+    print(f)
     print("saved")
 

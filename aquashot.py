@@ -12,9 +12,10 @@ print("successfully imported CV")
 
 
 def maintainServoTracking():
+    print("Servo tracking started")
+    faces = []
     while True:
-        while faces == recorder.prevFaces:
-            pass
+        time.sleep(1)
         faces = recorder.prevFaces
         xSum = 0
         ySum = 0
@@ -24,11 +25,15 @@ def maintainServoTracking():
                 xSum+=x
                 ySum+=y
                 numEntries+=1
+        if numEntries==0:
+            numEntries=1
         xAvg = xSum/numEntries
         yAvg = ySum/numEntries
-        height, width, channels = recorder.frame.shape
-        xmargin = .33
-        ymargin = .33
+        height, width, channels = [1080,1920,3]
+
+        print("height", height, "width", width, "xavg", xAvg, "yavg", yAvg)
+        xmargin = .1
+        ymargin = .1
         if xAvg < (width/2+width*(xmargin/2)) and xAvg>(width/2-width*(xmargin/2)):
             #x doesn't need moving
             pass
@@ -75,11 +80,13 @@ if __name__ == "__main__":
     print("Teensy successfully initialized")
 
     #initialize CV and tracking threads
+ 
     recorder = WebcamRecorder("output.mp4")
+    print("recorder created")
     recorder.start()
-    t = threading.Thread(target=maintainServoTracking)
-    t.start()
-
+    print("recorder started")
+    #j = threading.Thread(target=maintainServoTracking)
+    #j.start()
     while True:
         #check if there is a donation
         depAddress = getNextDepositorAddress(aptosWallet.address())
@@ -102,5 +109,6 @@ if __name__ == "__main__":
             recorder._save()
             print("video saved")
             ipfshash = uploadToIPFS("output.mp4")
-            sendNFT(aptosWallet, depAddress, "ipfs://"+ipfshash)
+            print(ipfshash)
+            sendNFT(aptosWallet, depAddress, "ipfs://"+ipfshash+".mp4")
         pass
