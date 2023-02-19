@@ -82,10 +82,11 @@ def setYServo(position):
     print("Y Servo set to position:", position)
 
 
-initSerial(chooseDevice())
+
 
 
 if(__name__ == "__main__"):
+    initSerial(chooseDevice())
     startPump()
     ledRedOn()
     time.sleep(.5)

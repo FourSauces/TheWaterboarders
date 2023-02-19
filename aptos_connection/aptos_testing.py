@@ -2,6 +2,9 @@ from aptos_sdk.account import Account
 from aptos_sdk.client import FaucetClient, RestClient
 import requests
 import json
+from datetime import datetime
+
+now = datetime.now()
 
 
 NODE_URL = "https://fullnode.testnet.aptoslabs.com/v1"
@@ -60,7 +63,30 @@ def getNextDepositorAddress(receivingAddress):
     else:
         return ""
 
+def sendNFT(sender, targetAddress, metalocation):
+    print("Sending NFT from "+str(sender.address())+" to "+str(targetAddress))
+    current_time = now.strftime("%H:%M:%S")
+    txn_hash = rest_client.create_token(
+        sender,
+        "AquaShot NFT Moments",
+        "NFT Moment from "+current_time,
+        "AquaShot NFT Moment",
+        1,
+        metalocation,
+        0,
+    )  # <:!:section_5
+    rest_client.wait_for_transaction(txn_hash)
 
+    txn_hash = rest_client.offer_token(
+        sender,
+        targetAddress,
+        sender.address(),
+        "AquaShot NFT Moments",
+        "NFT Moment from "+current_time,
+        0,
+        1,
+    )
+    rest_client.wait_for_transaction(txn_hash)
 
 if __name__ == "__main__":
     # :!:>section_1
@@ -114,13 +140,14 @@ if __name__ == "__main__":
         
 
     
-    
+    """
     txn_hash = rest_client.create_collection(
         bob, "AquaShot NFT Moments", "Moments created using AquaShot", "https://aquashot.tech/"
     )  # <:!:section_4
-    rest_client.wait_for_transaction(txn_hash)
+    rest_client.wait_for_transaction(txn_hash)"""
+    sendNFT(bob, alice.address(), "https://aptos.dev/img/nyan.jpeg")
     
-
+    """
     tokenname = "token7"
     txn_hash = rest_client.create_token(
         bob,
@@ -147,7 +174,7 @@ if __name__ == "__main__":
         0,
         1,
     )
-    rest_client.wait_for_transaction(txn_hash)
+    rest_client.wait_for_transaction(txn_hash)"""
 
     print("offer set")
 
