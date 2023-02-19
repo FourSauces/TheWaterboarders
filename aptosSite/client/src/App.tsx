@@ -16,7 +16,19 @@ function App() {
   const [accountHasList, setAccountHasList] = useState<boolean>(false);
 
   const fetchList = async () => {
-    if (!account) return [];
+    if (!account){
+      const alertZ = document.getElementById('message');
+      if(alertZ != null){
+        alertZ.textContent="Please connect your Petra wallet";
+      }
+      return [];
+    } else{
+      const alertZ = document.getElementById('message');
+      if(alertZ != null){
+        alertZ.textContent="Petra wallet connected!";
+      }
+      return [];
+    }
     /*
     // change this to be your module account address
     const moduleAddress = "0xcbddf398841353776903dbab2fdaefc54f181d07e114ae818b1a67af28d1b018";
@@ -49,6 +61,11 @@ function App() {
       await client.waitForTransaction(response.hash);
     } catch (error: any) {
     }
+    const alertZ = document.getElementById('message');
+      if(alertZ != null){
+        alertZ.textContent="Shot Purchased! Keep an eye on your offers to claim the NFT.";
+      }
+      return [];
   };
 
   useEffect(() => {
@@ -67,9 +84,16 @@ function App() {
           </Col>
           </Col>
         </Row>
+        <Row align="middle">
         <Button onClick={donateFund} block type="primary" style={{ height: "40px", backgroundColor: "#3f67ff" }}>
           Purchase a shot
         </Button>
+        </Row>
+        <Row align="middle">
+          <h1 id="message">
+            Connect your wallet please
+          </h1>
+        </Row>
       </Layout>
     </>
   );
